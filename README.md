@@ -1,38 +1,26 @@
-# BACKEND
-
-- npm init
-
-- npm i express dotenv
-
-### basic express app
-
-=> create .env file to write details that are private.
-
-=> create .gitignore , include node_modules, dotenv
-
-=>
-
-import express from "express"
-import dotenv from "dotenv"
-
-const app = express();
-
-doenv.config();
-
-const PORT = process.env.PORT || 3000
-
-app.get("/",(req,res)=>{
-    res.send("Home Route");
-})
-
-app.listen(PORT,()=>{
-    clg(`Server started at port: ${PORT}`)
-})
 
 
 # DATA MODELS
 
-const SchemaName = new mongoose.Model({
+### TEMPLATE
+
+=> import mongoose from 'mongoose';
+
+=>  
+
+const SchemaName = new mongoose.Schema({
+
+},{timestamps: true});
+
+
+=>  
+
+const ModelName = mongoose.model('ModelName',referedSchema);
+
+
+example :
+
+const userSchema = new mongoose.Model({
 
  <!-- - simple model -->
 
@@ -64,7 +52,6 @@ const SchemaName = new mongoose.Model({
         enum: ["Pending", "Shipped", "Delivered"],
         default: "Pending"
     }
-
 },{timestamps: true})
 
 
