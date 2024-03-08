@@ -35,6 +35,13 @@
 
 // 2ND APPROACH - CONNECT DB IN db=> database.js and connect it in index.js
 
+/* 
+
+-*   DB IS ALWAYS IN ANOTHER CONTINENT SO USE ASYNC,AWAIT
+-*   THERE CAN BE ERRORS SO ALWAYS WRAP IN TRY-CATCH BLOCK
+
+*/
+
 import mongoose from "mongoose";
 import { DB_NAME } from "../constants.js";
 

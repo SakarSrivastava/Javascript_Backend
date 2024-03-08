@@ -44,5 +44,80 @@ import connectDB from './db/database.js'
 dotenv.config();
 
 connectDB()
+.then(()=>{
+    
+})
+.catch((err) =>{
+    console.log("MONGO DB CONNECTION FAILED",err);
+})
+
+
+
+
+- npm i cors cookie-parser.
+
+- setup middlewares in app.js file.
+
+- make wrapper for the DB connection to be used in controllers in asyncHandler.js
+
+- make util of ApiError to send errors
+
+- make models - userSchema, videoSchema etc.
+
+- npm install mongoose-aggregate-paginate-v2 , use it in models for aggregation and pagination. (ex- videoSchema)
+
+    videoSchema.plugin(mongooseAggregatePaginate);
+
+
+- npm i bcrypt jsonwebtoken 
+
+- in user schema, schema.pre
+
+userSchema.pre("save", async function(next){
+    if(this.isModified("password")){
+        this.password = await bcrypt.hash(this.password,10);
+        next();
+    }
+    next();
+});
+
+
+- methods to compare password, genrate acces token and refresh token
+
+
+userSchema.methods.comparePassword = async function(password){
+    return await bcrypt.compare(password,this.password);
+}
+
+userSchema.methods.generateAccessToken = async function(){
+    return jwt.sign(
+        {
+            _id: this._id,
+            username: this.username,
+            email: this.email,
+            fullname: this.fullname,
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+        }
+)
+}
+
+
+userSchema.methods.generateRefreshToken = async function(){
+    return jwt.sign(
+        {
+            _id: this._id,
+        },
+        process.env.REFRESH_TOKEN,
+        {
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+        }
+)
+}
+
+
+
 
 
